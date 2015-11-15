@@ -1,3 +1,5 @@
+"""Download and parse actors for top movies in IMDB."""
+
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -15,11 +17,12 @@ def main():
 
 
 def get_top_imdb_movies():
+    """Retrive top 250 imdb movies."""
     movies = []
     res = requests.get(BASE_URL)
     soup = BeautifulSoup(res.text, 'html.parser')
     # .media h4
-    for i, movie_tag in enumerate(soup.find_all(class_='media')):
+    for movie_tag in soup.find_all(class_='media'):
         title = movie_tag.find('h4').text.split('\n')[2]
         href = movie_tag.find('a')['href']
         movie_url = urljoin(BASE_URL, href)
@@ -28,6 +31,7 @@ def get_top_imdb_movies():
 
 
 def get_movie_actors(movie_url):
+    """Retrieve top paid crew for a movie."""
     actors = []
     res = requests.get(movie_url)
     soup = BeautifulSoup(res.text, 'html.parser')

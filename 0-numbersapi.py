@@ -1,10 +1,11 @@
+"""Demo of requests package."""
+
 import requests
 
 
 def main():
     params = {
-        'json': '',
-
+        'json': ''
     }
     try:
         page = requests.get('http://numbersapi.com/42', params=params)

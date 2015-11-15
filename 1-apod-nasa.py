@@ -1,3 +1,5 @@
+"""Download images from Apod NASA archive."""
+
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -8,7 +10,6 @@ FOLDER = '/home/sharp/Projects/pycon-webscraping/images/'
 
 
 def main():
-    url = 'http://apod.nasa.gov/apod/ap151107.html'
     archive_url = 'http://apod.nasa.gov/apod/archivepix.html'
     res = requests.get(archive_url)
     soup = BeautifulSoup(res.text, 'html.parser')
@@ -24,6 +25,7 @@ def main():
 
 
 def get_img_url(url):
+    """Retrieve url of an image on the apod page."""
     html = requests.get(url).text
     soup = BeautifulSoup(html, 'html.parser')  # could use lxml -> faster
     img_src = soup.find('img').get('src')
@@ -31,10 +33,11 @@ def get_img_url(url):
 
 
 def download_image(url, filename):
+    """Download an image and save it to a file."""
     res = requests.get(url, stream=True)
-    with open(filename, 'wb') as f:
+    with open(filename, 'wb') as file:
         for chunk in res:
-            f.write(chunk)
+            file.write(chunk)
 
 
 if __name__ == '__main__':

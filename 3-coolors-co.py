@@ -1,7 +1,10 @@
+"""Create a coolors.co color scheme from command line."""
+
 import requests
 
 
 def upload_palette(username, password, c1, c2, c3, c4, c5):
+    """Upload a pallete to coolors.co"""
     login_url = 'https://coolors.co/ajax/login'
     login_data = {
         'e': username,
